@@ -10,7 +10,10 @@
 ### Installation
 
 1. Clone the repository:
-    git clone 'url'
+    ```sh
+    git clone https://github.com/navaneethgade07/Worko_Backend_api_setup.git
+    cd worko
+    ```
 
 2. Install dependencies:
     ```sh
@@ -33,4 +36,3 @@
 
 ```sh
 npm test
-# Worko_Backend_api_setup

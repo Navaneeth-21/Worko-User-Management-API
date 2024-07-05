@@ -11,7 +11,7 @@ const validateCreateUser = (data)=>{
         zipcode : joi.number().required()
     }); 
 
-    return validateCreateUser(schema);
+    return schema.validate(data);
 };
 
 // for validateupdateuser
@@ -24,7 +24,7 @@ const validateUpdateUser = (data)=>{
         zipcode : joi.number().optional()
     });
 
-    return validateUpdateUser(schema);
+    return schema.validate(data);
 }
 
 

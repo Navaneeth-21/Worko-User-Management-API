@@ -1,9 +1,9 @@
+require('dotenv').config();
 const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-dotenv.config();
 
-const authenticate = (req, res, next) => {
-  const token = req.header("Authorization")?.replace("Bearer ", "");
+
+const authenticateToken = (req, res, next) => {
+  const token = req.headers['Authorization'];
   if (!token) {
     return res.status(401).send("Access denied. No token provided.");
   }
@@ -17,4 +17,4 @@ const authenticate = (req, res, next) => {
   }
 };
 
-module.exports = authenticate;
+module.exports = authenticateToken;

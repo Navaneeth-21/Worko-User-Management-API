@@ -18,8 +18,8 @@ const createSchema = new mongoose.Schema({
         type : String,
         required : true,
     },
-    zipCode : {
-        type : String,
+    zipcode : {
+        type : Number,
         required : true,
     },
     isDeleted : {

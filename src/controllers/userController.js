@@ -1,7 +1,6 @@
 const User = require("../models/user");
 const validate = require("../validators/userValidator");
 
-
 // GET - list user
 const listallUsers = async (req, res) => {
   try {
@@ -11,7 +10,6 @@ const listallUsers = async (req, res) => {
     res.status(500).json(err.message);
   }
 };
-
 
 // GET - user details by id
 const getUserDetails = async (req, res) => {
@@ -26,47 +24,47 @@ const getUserDetails = async (req, res) => {
   }
 };
 
-
 // POST - create user
 const createUser = async (req, res) => {
   const { error } = validate.validateCreateUser(req.body);
   if (error) {
-    return res.status(400).json({ message: 'validation error' });
+    return res.status(400).json({ message: "validation error" });
   }
 
   try {
-
     const user = new User(req.body);
     await user.save();
-    res.status(201).json({message:'user created successfully'});
+    res.status(201).json({ message: "user created successfully" });
   } catch (error) {
     res.status(500).json(error.message);
   }
-
 };
-
 
 // PUT - update user
 const updateUser = async (req, res) => {
   const { error } = validate.validateUpdateUser(req.body);
-  console.log(error);
   if (error) {
     return res.status(400).json({ message: error.details[0].message });
   }
 
   try {
-    const user = User.findByIdAndUpdate(req.params.userID, req.body).where({
-      isDeleted: false,
-    });
+    const user = await User.findOneAndUpdate(
+      {
+        _id: req.params.userID,
+        isDeleted: false,
+      },
+      req.body,
+      { new: true }
+    );
+
     if (!user) {
       res.status(404).json({ message: "No user found" });
     }
-    return res.status(200).json({message:'user is updated successfully'});
+    return res.status(200).json(user);
   } catch (error) {
     return res.status(500).json(error.message);
   }
 };
-
 
 // DELETE  - soft delete in DB
 const deleteUser = async (req, res) => {
@@ -75,17 +73,16 @@ const deleteUser = async (req, res) => {
     if (!user) {
       res.status(404).json({ message: "No user found" });
     }
-    return res.status(200).json({message:'user is deleted successfully'});
+    return res.status(200).json({ message: "user is deleted successfully" });
   } catch (error) {
     return res.status(500).json(error.message);
   }
 };
 
-
-module.exports = { 
-    listallUsers,
-    getUserDetails,
-    createUser,
-    updateUser,
-    deleteUser 
+module.exports = {
+  listallUsers,
+  getUserDetails,
+  createUser,
+  updateUser,
+  deleteUser,
 };

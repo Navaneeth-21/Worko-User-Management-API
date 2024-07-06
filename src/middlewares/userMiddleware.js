@@ -1,19 +1,25 @@
-require('dotenv').config();
+require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
-
 const authenticateToken = (req, res, next) => {
-  const token = req.headers['Authorization'];
-  if (!token) {
-    return res.status(401).send("Access denied. No token provided.");
-  }
-
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const authHeader = req.headers["authorization"];
+    if (authHeader == null) {
+      return res.status(401).json({ message: "No Token provided" });
+    }
+
+    const token = authHeader && authHeader.split(" ")[1];
+
+    if (token == null) {
+      return res.status(401).json({ message: "Malformed token" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     req.user = decoded;
     next();
-  } catch (ex) {
-    res.status(400).send("Invalid token.");
+  } catch (err) {
+    console.log(err);
+    return res.status(403).json({ message: "Invalid token" });
   }
 };
 

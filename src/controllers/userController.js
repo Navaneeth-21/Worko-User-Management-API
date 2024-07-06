@@ -1,4 +1,6 @@
+require('dotenv').config();
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
 const validate = require("../validators/userValidator");
 
 // GET - list user
@@ -33,8 +35,13 @@ const createUser = async (req, res) => {
 
   try {
     const user = new User(req.body);
+
+    // generate a token for the user
+    const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: "1h",
+    });
     await user.save();
-    res.status(201).json({ message: "user created successfully" });
+    res.status(201).json({ message: "User created successfully", token: token }); 
   } catch (error) {
     res.status(500).json(error.message);
   }

@@ -6,6 +6,10 @@
     "test": "jest",
     "start": "nodemon src/app.js"
   },
+  "jest": {
+    "testEnvironment": "node",
+    "detectOpenHandles": true
+  },
   "author": "Navaneeth",
   "license": "ISC",
   "description": "",

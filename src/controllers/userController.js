@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const validate = require("../validators/userValidator");
@@ -41,7 +41,7 @@ const createUser = async (req, res) => {
       expiresIn: "1h",
     });
     await user.save();
-    res.status(201).json({ message: "User created successfully", token: token }); 
+    res.status(201).json({ message: "User created successfully", token });
   } catch (error) {
     res.status(500).json(error.message);
   }
@@ -76,11 +76,15 @@ const updateUser = async (req, res) => {
 // DELETE  - soft delete in DB
 const deleteUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.userID);
+    const user = await User.findByIdAndDelete(
+      req.params.userID,
+      { isDeleted: true },
+      { new: true }
+    );
     if (!user) {
       res.status(404).json({ message: "No user found" });
     }
-    return res.status(200).json({ message: "user is deleted successfully" });
+    return res.status(200).json({ message: "user soft deleted" });
   } catch (error) {
     return res.status(500).json(error.message);
   }

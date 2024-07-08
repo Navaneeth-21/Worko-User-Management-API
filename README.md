@@ -35,6 +35,15 @@
     npm start
     ```
 
+5. Api requests :
+    - Send all api requests using postman or thunderclient extension in vscode.
+    - For **POST** request send the required details to create a user.
+    - For **GET** request(listallusers) you can retrieve the all the user details in the database.
+    - For **GET** request(getuser) to retrieve a user by its userID.
+    - **PUT** request to replace the whole existing data with the updated data.
+    - **PATCH** request to update the existing data with the optional data.
+    - **DELETE** request to soft delete a user by it's userID.
+
 ### Running Tests
 
 ```sh

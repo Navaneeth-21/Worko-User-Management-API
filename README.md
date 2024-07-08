@@ -9,6 +9,7 @@
 - jest
 - supertest
 - JWT
+- joi(validation)
 
 ### Installation
 

@@ -6,6 +6,9 @@
 
 - Node.js
 - MongoDB
+- jest
+- supertest
+- JWT
 
 ### Installation
 
